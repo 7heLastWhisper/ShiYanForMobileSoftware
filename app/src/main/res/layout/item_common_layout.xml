@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="5dp">
+
+    <ImageView
+        android:id="@+id/image_view_common_book_cover"
+        android:layout_width="200dp"
+        android:layout_height="200dp">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/text_view_common_book_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#69FFD9AA"
+        android:paddingVertical="70dp"
+        android:paddingLeft="15dp"
+        android:textSize="20sp">
+
+    </TextView>
+</LinearLayout>
