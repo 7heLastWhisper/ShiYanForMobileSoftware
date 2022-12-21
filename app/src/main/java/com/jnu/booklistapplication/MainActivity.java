@@ -12,6 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -20,6 +24,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jnu.booklistapplication.data.DataBank;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,27 +33,24 @@ public class MainActivity extends AppCompatActivity {
     public static final int RESULT_CODE_ADD_OK = REQUEST_CODE_ADD_DATA + 1;
     public static final int RESULT_CODE_EDIT_OK = REQUEST_CODE_ADD_DATA + 2;
     public static final int REQUEST_CODE_EDIT_DATA = REQUEST_CODE_ADD_DATA + 3;
+    private DataBank dataBank;
+    ActivityResultLauncher<Intent> AddActivityResultLauncher;
     RecyclerView recyclerView;
     List<BookList.Book> mBookList;
     BookAdapter mAdapter;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        //接受Activity传回的数据
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_ADD_DATA) {
-            if (resultCode == RESULT_CODE_ADD_OK) {
-                String name = data.getStringExtra("bookName");
-                int type = data.getIntExtra("bookType", 0);
-                mBookList.add(new BookList.Book(name, R.drawable.book_no_name, type));
-                mAdapter.notifyItemInserted(mBookList.size());
-            }
-        }
-        if (requestCode == REQUEST_CODE_EDIT_DATA) {
+
+        if (requestCode == REQUEST_CODE_EDIT_DATA) {//来自编辑Activity的回传
             if (resultCode == RESULT_CODE_EDIT_OK) {
                 assert data != null;
                 String name = data.getStringExtra("bookName");
                 int position = data.getIntExtra("position", mBookList.size());
                 mBookList.get(position).setTitle(name);
+                dataBank.saveData();
                 mAdapter.notifyItemChanged(position);
             }
         }
@@ -68,15 +71,53 @@ public class MainActivity extends AppCompatActivity {
         //添加分割线
         recyclerView.addItemDecoration(new DividerItemDecoration(
                 MainActivity.this, DividerItemDecoration.VERTICAL));
+
+        //跳转至AddActivity的注册
+        AddActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == RESULT_CODE_ADD_OK) {
+                            Intent data = result.getData();
+                            String name = data.getStringExtra("bookName");
+                            int type = data.getIntExtra("bookType", 0);
+                            mBookList.add(new BookList.Book(name, R.drawable.book_no_name, type));
+                            dataBank.saveData();
+                            mAdapter.notifyItemInserted(mBookList.size());
+                        }
+                    }
+                });
     }
 
     public void initData() {
-        mBookList.add(new BookList.Book("软件项目管理案例教程（第4版）", R.drawable.book_2, 1));
-        mBookList.add(new BookList.Book("创新工程实践", R.drawable.book_no_name, 1));
-        mBookList.add(new BookList.Book("创新工程实践", R.drawable.book_no_name, 2));
-        mBookList.add(new BookList.Book("信息安全数学基础（第2版）", R.drawable.book_1, 1));
-        mBookList.add(new BookList.Book("信息安全数学基础（第2版）", R.drawable.book_1, 2));
-        mBookList.add(new BookList.Book("信息安全数学基础（第2版）", R.drawable.book_1, 1));
+//        mBookList.add(new BookList.Book("软件项目管理案例教程（第4版）", R.drawable.book_2, 1));
+//        mBookList.add(new BookList.Book("创新工程实践", R.drawable.book_no_name, 1));
+//        mBookList.add(new BookList.Book("创新工程实践", R.drawable.book_no_name, 2));
+//        mBookList.add(new BookList.Book("信息安全数学基础（第2版）", R.drawable.book_1, 1));
+//        mBookList.add(new BookList.Book("信息安全数学基础（第2版）", R.drawable.book_1, 2));
+//        mBookList.add(new BookList.Book("信息安全数学基础（第2版）", R.drawable.book_1, 1));
+        dataBank = new DataBank(MainActivity.this);
+        mBookList = dataBank.loadData();
+    }
+
+    //右上角菜单
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;// true：允许创建的菜单显示出来，false：创建的菜单将无法显示。
+    }
+
+    //右上角菜单的点击事件
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.it_menu_add:
+                Intent intent;
+                intent = new Intent(MainActivity.this, AddBookActivity.class);
+                AddActivityResultLauncher.launch(intent);
+                break;
+        }
+        return true;
     }
 
     public class BookAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -167,7 +208,9 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) { //item.getItemId表示按的是右键菜单中的哪一项
                     case BOOK_ADD:
                         intent = new Intent(MainActivity.this, AddBookActivity.class);
-                        MainActivity.this.startActivityForResult(intent, REQUEST_CODE_ADD_DATA);
+                        AddActivityResultLauncher.launch(intent);
+                        //intent = new Intent(MainActivity.this,AddBookActivity.class);
+                        //MainActivity.this.startActivityForResult(intent,REQUEST_CODE_ADD_DATA);
                         break;
                     case BOOK_EDIT:
                         //跳转到EditBookActivity进行编辑
@@ -183,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
                         bookDeleteDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 mBookList.remove(position);
+                                dataBank.saveData();
                                 BookAdapter.this.notifyItemRemoved(position);
                             }
                         });
@@ -206,6 +250,7 @@ public class MainActivity extends AppCompatActivity {
                     this.bookCover = itemView.findViewById(R.id.image_view_show_book_cover);
                     this.bookName = itemView.findViewById(R.id.text_view_show_book_title);
                 }
+
             }
         }
     }

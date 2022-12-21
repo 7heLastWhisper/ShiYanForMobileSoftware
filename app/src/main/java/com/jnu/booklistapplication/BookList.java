@@ -1,10 +1,13 @@
 package com.jnu.booklistapplication;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookList {
-    public static class Book {
+public class BookList implements Serializable {
+    private static final long serialVersionUID = 123;
+
+    public static class Book implements Serializable {
         private String bookName;
         private int bookImageId;
         private int bookType;

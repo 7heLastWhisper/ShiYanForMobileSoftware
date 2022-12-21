@@ -50,6 +50,14 @@ public class AddBookActivity extends AppCompatActivity {
                 AddBookActivity.this.finish();
             }
         });
+    }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra("bookName", etAddBookName.getText().toString());
+        intent.putExtra("bookType", Integer.parseInt(rbAddBookType.getText().toString()));
+        setResult(MainActivity.RESULT_CODE_ADD_OK, intent);
+        finish();
     }
 }
