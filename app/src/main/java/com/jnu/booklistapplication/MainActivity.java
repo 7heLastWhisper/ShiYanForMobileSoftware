@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.baidu.mapapi.map.MapFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -28,24 +29,33 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        // ViewPage设置自定义Adapter
         mViewPage.setAdapter(new MyFragmentView(this));
+        // TabLayout与ViewPage建立联系的中介TabLayoutMediator
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(mTabLayout, mViewPage,
-                (tab, position) -> tab.setText(tabTitles[position]));
+                new TabLayoutMediator.TabConfigurationStrategy() {
+                    @Override
+                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                        tab.setText(tabTitles[position]);
+                    }
+                });
+        // 设置生效
         tabLayoutMediator.attach();
     }
 
     private void initView() {
         mTabLayout = findViewById(R.id.tl_tab);
         mViewPage = findViewById(R.id.vp_content);
-        tabTitles = new String[]{"书籍", "新闻", "卖家"};
+        tabTitles = new String[]{"图书", "新闻", "卖家"};
         BookFragment bookFragment = new BookFragment();
         WebViewFragment newsFragment = new WebViewFragment();
-        WebViewFragment salerFragment = new WebViewFragment();
+        MapFragment salerFragment = new MapFragment();
         mFragments.add(bookFragment);
         mFragments.add(newsFragment);
         mFragments.add(salerFragment);
     }
 
+    //自定义的Adapter
     private class MyFragmentView extends FragmentStateAdapter {
         public MyFragmentView(@NonNull FragmentActivity fragmentActivity) {
             super(fragmentActivity);

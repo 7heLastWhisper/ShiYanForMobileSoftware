@@ -1,5 +1,6 @@
 package com.jnu.booklistapplication;
 
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -44,7 +46,7 @@ public class BookFragment extends Fragment {
     List<BookList.Book> mBookList;
     BookAdapter mAdapter;
 
-    // ------接受回传数据---------
+    // -----------接受回传数据------------
 
     //接收AddBookActivity的回传数据，添加书籍
     ActivityResultLauncher<Intent> AddActivityResultLauncher = registerForActivityResult(
@@ -52,6 +54,7 @@ public class BookFragment extends Fragment {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == RESULT_CODE_ADD_OK) {
+                        Log.e("MYTAG", "收到回传");
                         Intent data = result.getData();
                         String name = data.getStringExtra("bookName");
                         int type = data.getIntExtra("bookType", 0);
@@ -126,7 +129,8 @@ public class BookFragment extends Fragment {
         return rootView;
     }
 
-    //------弹出菜单------
+    // ------------弹出菜单------------
+
     private void showPopupMenu(View view) {
         // View当前PopupMenu显示的相对View的位置
         PopupMenu popupMenu = new PopupMenu(BookFragment.this.getContext(), view);
@@ -156,7 +160,7 @@ public class BookFragment extends Fragment {
 
 
     public void initData() {
-        dataBank = new DataBank(BookFragment.this.getContext());
+        dataBank = new DataBank(getContext());
         mBookList = dataBank.loadData();
     }
 
