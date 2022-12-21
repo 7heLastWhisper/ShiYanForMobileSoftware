@@ -1,4 +1,4 @@
-package com.jnu.booklistapplication;
+package com.jnu.booklistapplication.data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,6 +32,26 @@ public class BookList implements Serializable {
 
         public void setTitle(String title) {
             this.bookName = title;
+        }
+
+        public void setBookImageId(int bookImageId) {
+            this.bookImageId = bookImageId;
+        }
+
+        public void setBookName(String bookName) {
+            this.bookName = bookName;
+        }
+
+        public void setBookType(int bookType) {
+            this.bookType = bookType;
+        }
+
+        public String getBookName() {
+            return bookName;
+        }
+
+        public int getBookImageId() {
+            return bookImageId;
         }
     }
 

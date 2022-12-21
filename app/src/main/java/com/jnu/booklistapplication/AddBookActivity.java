@@ -1,5 +1,7 @@
 package com.jnu.booklistapplication;
 
+import static com.jnu.booklistapplication.BookFragment.RESULT_CODE_ADD_OK;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -38,9 +40,10 @@ public class AddBookActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
+                //按下OK，回传数据：书名和书类型
                 intent.putExtra("bookName", etAddBookName.getText().toString());
                 intent.putExtra("bookType", Integer.parseInt(rbAddBookType.getText().toString()));
-                setResult(MainActivity.RESULT_CODE_ADD_OK, intent);
+                setResult(RESULT_CODE_ADD_OK, intent);
                 AddBookActivity.this.finish();
             }
         });
@@ -55,9 +58,10 @@ public class AddBookActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
+        //直接返回也回传数据
         intent.putExtra("bookName", etAddBookName.getText().toString());
         intent.putExtra("bookType", Integer.parseInt(rbAddBookType.getText().toString()));
-        setResult(MainActivity.RESULT_CODE_ADD_OK, intent);
+        setResult(RESULT_CODE_ADD_OK, intent);
         finish();
     }
 }

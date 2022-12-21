@@ -2,8 +2,6 @@ package com.jnu.booklistapplication.data;
 
 import android.content.Context;
 
-import com.jnu.booklistapplication.BookList;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

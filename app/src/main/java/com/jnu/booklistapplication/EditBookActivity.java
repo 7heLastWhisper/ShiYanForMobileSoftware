@@ -1,10 +1,11 @@
 package com.jnu.booklistapplication;
 
+import static com.jnu.booklistapplication.BookFragment.RESULT_CODE_EDIT_OK;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +23,7 @@ public class EditBookActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int position = intent.getIntExtra("position", 0);
-        //接收从MainActivity传过来的位置信息
+        //接收从BookFragment传过来的位置信息
 
         btnEditOk = findViewById(R.id.btn_item_edit_book_ok);
         btnEditCancel = findViewById(R.id.btn_item_edit_book_cancel);
@@ -36,7 +37,7 @@ public class EditBookActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.putExtra("bookName", etEditBookName.getText().toString());
                     intent.putExtra("position", position);
-                    setResult(MainActivity.RESULT_CODE_EDIT_OK, intent);
+                    setResult(RESULT_CODE_EDIT_OK, intent);
                     //只传状态码可以只要第一个参数，传数据务必加上第二个参数！！
                     EditBookActivity.this.finish();
                 }
