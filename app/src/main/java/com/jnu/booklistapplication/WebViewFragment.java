@@ -41,7 +41,7 @@ public class WebViewFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_web_view, container, false);
         WebView webView = rootView.findViewById(R.id.wv_web_content);
-        webView.loadUrl("https://news.sina.com.cn");
+        webView.loadUrl("https://news.sina.cn/");
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         return rootView;
