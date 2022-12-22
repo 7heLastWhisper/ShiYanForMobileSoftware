@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:kongqw="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameActivity">
+
+    <com.jnu.booklistapplication.view.GameView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.jnu.booklistapplication.view.GameView>
+
+    <com.kongqw.rockerlibrary.view.RockerView
+        android:id="@+id/rockerView"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        kongqw:areaBackground="@color/grey"
+        kongqw:rockerBackground="@color/purple_200"
+        kongqw:rockerRadius="22dp" />
+
+    <Button
+        android:id="@+id/btn_shoot"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="45dp"
+        android:background="@color/grey"
+        android:text="射击"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_game_over"
+        android:layout_width="250dp"
+        android:layout_height="200dp"
+        android:background="#7fff0050"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_game_over"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="游戏结束"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@id/btn_restart"
+            app:layout_constraintLeft_toLeftOf="@id/layout_game_over"
+            app:layout_constraintRight_toRightOf="@id/layout_game_over"
+            app:layout_constraintTop_toTopOf="@id/layout_game_over" />
+
+        <Button
+            android:id="@+id/btn_restart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="重新开始"
+            app:layout_constraintBottom_toBottomOf="@id/layout_game_over"
+            app:layout_constraintLeft_toLeftOf="@id/layout_game_over"
+            app:layout_constraintRight_toLeftOf="@id/btn_exit"
+            app:layout_constraintTop_toTopOf="@id/tv_game_over" />
+
+        <Button
+            android:id="@+id/btn_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="退出"
+            app:layout_constraintBottom_toBottomOf="@id/layout_game_over"
+            app:layout_constraintLeft_toRightOf="@id/btn_restart"
+            app:layout_constraintRight_toRightOf="@id/layout_game_over"
+            app:layout_constraintTop_toTopOf="@id/tv_game_over" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

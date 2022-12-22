@@ -50,13 +50,15 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         mTabLayout = findViewById(R.id.tl_tab);
         mViewPage = findViewById(R.id.vp_content);
-        tabTitles = new String[]{"图书", "新闻", "卖家"};
+        tabTitles = new String[]{"图书", "新闻", "卖家", "游戏"};
         BookFragment bookFragment = new BookFragment();
         WebViewFragment newsFragment = new WebViewFragment();
         MapFragment salerFragment = new MapFragment();
+        GameFragment gameFragment = new GameFragment();
         mFragments.add(bookFragment);
         mFragments.add(newsFragment);
         mFragments.add(salerFragment);
+        mFragments.add(gameFragment);
     }
 
     //自定义的Adapter
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return 3;
+            return 4;
         }
     }
 

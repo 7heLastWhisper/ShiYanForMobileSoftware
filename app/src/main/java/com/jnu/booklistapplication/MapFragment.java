@@ -121,7 +121,7 @@ public class MapFragment extends Fragment {
             public void run() {
                 //通过网络获取坐标信息
                 try {
-                    String str = new DataLoader().download("http://file.nidama.net/class/mobile_develop/data/bookstore2022.json");
+                    String str = new DataLoader().download("http://file.nidama.net/class/mobile_develop/data/bookstore.json");
                     Message message = new Message();
                     message.what = WHAT_DATA_OK;
                     Bundle bundle = new Bundle();

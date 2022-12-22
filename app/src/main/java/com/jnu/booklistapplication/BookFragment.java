@@ -1,20 +1,21 @@
 package com.jnu.booklistapplication;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -243,7 +244,7 @@ public class BookFragment extends Fragment {
 
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                int position = getAdapterPosition();
+                int position = getAbsoluteAdapterPosition();
                 Intent intent;
                 switch (item.getItemId()) { //item.getItemId表示按的是右键菜单中的哪一项
                     case BOOK_ADD:
@@ -307,7 +308,7 @@ public class BookFragment extends Fragment {
 
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    int position = getAdapterPosition();
+                    int position = getAbsoluteAdapterPosition();
                     Intent intent;
                     switch (item.getItemId()) { //item.getItemId表示按的是右键菜单中的哪一项
                         case BOOK_ADD:
