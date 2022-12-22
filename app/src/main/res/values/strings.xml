@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">BooklistApplication</string>
+    <string name="todo">TODO</string>
+    <string name="start_game">开始游戏</string>
+    <string name="game_name">雷霆战机</string>
+    <string name="quit">退出</string>
+    <string name="restart">重新开始</string>
+    <string name="game_over">游戏结束</string>
+    <string name="fire">射击</string>
+    <string name="edit_book_info">编辑书籍信息</string>
+    <string name="book_name">书名</string>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="add_book">添加书籍</string>
+    <string name="type">类型</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="add">添加</string>
 </resources>

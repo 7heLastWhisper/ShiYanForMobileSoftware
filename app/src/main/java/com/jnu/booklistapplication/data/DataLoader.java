@@ -7,27 +7,29 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.spec.ECField;
 import java.util.ArrayList;
 
 public class DataLoader {
+
     public String download(String strUrl) {
+
         StringBuffer stringBuffer = new StringBuffer();
+
         try {
-            //返回Json字符串
+            // 返回Json字符串
             URL url = new URL(strUrl);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setUseCaches(false);
             httpURLConnection.connect();
-            //判断HTTP报文的状态码
+
+            // 判断HTTP报文的状态码
             if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 InputStream inputStream = httpURLConnection.getInputStream();
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                //输入流
+                // 输入流
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                //加一层缓冲，就可以一行一行读
+                // 加一层缓冲，就可以一行一行读
                 String line = "";
                 while (null != (line = bufferedReader.readLine())) {
                     stringBuffer.append(line);
@@ -36,12 +38,15 @@ public class DataLoader {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return new String(stringBuffer);
     }
 
     public ArrayList parsonJson(String strJson) {
+
         //解析Json
         ArrayList<ShopLocation> arrayList = new ArrayList<>();
+
         try {
             JSONObject jsonObject = new JSONObject(strJson);
             JSONArray shops = jsonObject.getJSONArray("shops");
@@ -56,6 +61,7 @@ public class DataLoader {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return arrayList;
     }
 }

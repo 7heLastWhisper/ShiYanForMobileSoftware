@@ -10,7 +10,8 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
-        android:background="#697FE38C" />
+        android:background="#697FE38C"
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:id="@+id/text_view_show_book_title"

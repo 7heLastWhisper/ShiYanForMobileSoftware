@@ -4,10 +4,13 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 
 public class BitmapUtil {
+
     public BitmapUtil() {
+
     }
 
     public Bitmap zoomImg(Bitmap bm, int newWidth, int newHeight) {
+
         // 获得图片的宽高
         int width = bm.getWidth();
         int height = bm.getHeight();
